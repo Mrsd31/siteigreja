@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Igreja Reconnect - Comunidade de Fé</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/5511999999999" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Banner de Fundo com Slideshow -->
+    <div class="main-banner">
+        <div class="banner-overlay">
+            <img src="photo-1507692049790-de58290a4334.avif" alt="">
+        </div>
+
+        
+        <!-- Slideshow -->
+        <div class="photo-slider">
+            <div class="slide active" style="background-image: url('https://source.unsplash.com/random/1920x1080/?church,christian');"></div>
+            <div class="slide" style="background-image: url('https://source.unsplash.com/random/1920x1080/?worship,people');"></div>
+            <div class="slide" style="background-image: url('https://source.unsplash.com/random/1920x1080/?bible,prayer');"></div>
+        </div>
+        
+        <!-- Logo no Centro -->
+        <div class="logo-center">
+            <img src="RECONNECT ICONEtransp.png" alt="Logo Reconnect" class="main-logo">
+            <h1 class="church-name">Igreja Reconnect</h1>
+            <p class="church-slogan">Uma comunidade de fé e amor</p>
+        </div>
+        
+        <!-- Player de Áudio Moderno -->
+        <div class="modern-audio-player">
+            <div class="player-container">
+                <audio id="churchAudio" loop>
+                    <source src="musica001.mpeg" type="audio/mp3">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+                <button id="playBtn" class="player-btn"><i class="fas fa-play"></i></button>
+                <div class="player-controls">
+                    <div class="song-info">Louvor da Semana</div>
+                    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.7">
+                    <div class="volume-icon"><i class="fas fa-volume-up"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <nav>
+        <ul>
+            <li><a href="#home">Início</a></li>
+            <li><a href="#about">Sobre Nós</a></li>
+            <li><a href="#events">Eventos</a></li>
+            <li><a href="#gallery">Galeria</a></li>
+            <li><a href="#media">Mídia</a></li>
+            <li><a href="#contact">Contato</a></li>
+        </ul>
+    </nav>
+    
+    <main class="container">
+        <section id="home">
+            <h2 class="section-title">Bem-vindo à nossa comunidade</h2>
+            <p>Somos uma igreja comprometida com o amor de Cristo e o serviço ao próximo. Junte-se a nós em nossas celebrações e atividades.</p>
+            
+            <div class="parallax-section">
+                <img src="505969-wheat.jpg" alt="">
+                <div class="parallax-content">
+                    <h3>Venha nos visitar</h3>
+                    <p>Cultos dominicais às 9h e 19h</p>
+                    <a href="#events" class="cta-button">Ver Eventos</a>
+                 
+                </div>
+            </div>
+        </section>
+        
+        <section id="events">
+            <h2 class="section-title">Próximos Eventos</h2>
+            <div class="events-grid" id="events-container">
+                <!-- Eventos serão carregados via JavaScript -->
+            </div>
+            <div class="see-more">
+                <a href="#" class="see-more-btn">Ver Todos os Eventos</a>
+            </div>
+        </section>
+        
+        <section id="gallery">
+            <h2 class="section-title">Galeria de Fotos</h2>
+            <div class="gallery-grid">
+                <!-- Fotos serão adicionadas via JavaScript -->
+            </div>
+            <div class="see-more">
+                <a href="#" class="see-more-btn">Ver Mais Fotos</a>
+            </div>
+        </section>
+        
+        <section id="media">
+            <h2 class="section-title">Nossa Mídia</h2>
+            <div class="media-container">
+                <div class="media-item">
+                    <i class="fas fa-music"></i>
+                    <h3>Louvores</h3>
+                    <p>Acesse nossas músicas e playlists</p>
+                </div>
+                <div class="media-item">
+                    <i class="fas fa-video"></i>
+                    <h3>Pregações</h3>
+                    <p>Assista nossas mensagens</p>
+                </div>
+                <div class="media-item">
+                    <i class="fas fa-podcast"></i>
+                    <h3>Podcasts</h3>
+                    <p>Ouça nossos estudos</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact">
+            <h2 class="section-title">Entre em Contato</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Informações</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Endereço: Rua da Igreja, 123</p>
+                    <p><i class="fas fa-phone"></i> Telefone: (00) 1234-5678</p>
+                    <p><i class="fas fa-envelope"></i> Email: contato@reconnect.com</p>
+                    <p><i class="fas fa-clock"></i> Horários de Culto:</p>
+                    <ul class="service-times">
+                        <li>Domingo: 9h e 19h</li>
+                        <li>Quarta-feira: 20h (Oração)</li>
+                        <li>Sábado: 15h (Jovens)</li>
+                    </ul>
+                </div>
+                
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nome:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Telefone:</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="message">Mensagem:</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Enviar Mensagem</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="RECONNECT ICONEtransp.png" alt="Logo Reconnect">
+                <span>Igreja Reconnect</span>
+            </div>
+            <div class="footer-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/ib.reconnect/"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="footer-subscribe">
+                <h3>Receba nossas novidades</h3>
+                <form class="subscribe-form">
+                    <input type="email" placeholder="Seu melhor email">
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2023 Igreja Reconnect. Todos os direitos reservados.</p>
+    </footer>
+    
+    <script src="script.js"></script>
+
+
+
+</body>
+</html>
