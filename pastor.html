@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministério Pastoral - Reconnect</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .department-header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-bottom: 3px solid #8A2BE2;
+            margin-bottom: 30px;
+        }
+        
+        .department-header h1 {
+            color: #8A2BE2;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .department-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .department-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .pastor-profile {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--dark-accent);
+        }
+        
+        @media (max-width: 768px) {
+            .pastor-profile {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .pastor-photo {
+            text-align: center;
+        }
+        
+        .pastor-photo img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            border: 3px solid #8A2BE2;
+        }
+        
+        .pastor-info h2 {
+            color: #8A2BE2;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .pastor-info p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .sermons-container {
+            margin-top: 30px;
+        }
+        
+        .sermons-container h2 {
+            color: #8A2BE2;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .sermon-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .sermon-card {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--dark-accent);
+        }
+        
+        .sermon-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .sermon-card .date {
+            color: #8A2BE2;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .sermon-card .description {
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .watch-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #8A2BE2;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .watch-btn:hover {
+            background-color: #9932CC;
+            transform: translateY(-3px);
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #8A2BE2;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #9932CC;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+      <!-- Slideshow de fundo -->
+    <div class="slideshow">
+        <div class="slide active" style="background-image: url('imags/logo8.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo1.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo2.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo4.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo5.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo7.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo8.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo9.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo10.jpg')"></div>
+        <div class="overlay"></div>
+    </div>
+
+    <div class="logo-top">
+        <img src="imags/RECONNECT ICONEtransp.png" alt="Reconnect Logo">
+    </div>
+
+    <div class="department-header">
+        <h1>MINISTÉRIO PASTORAL</h1>
+        <p>Liderança e direção espiritual</p>
+    </div>
+
+    <div class="department-content">
+        <div class="pastor-profile">
+            <div class="pastor-photo">
+                <img src="imags/foto da igreja/pastor.png" alt="Pastor">
+            </div>
+            <div class="pastor-info">
+                <h2>PASTOR PRINCIPAL</h2>
+                <p><strong>Nome:</strong> Pr. João da Silva</p>
+                <p><strong>Formação:</strong> Teologia pelo Seminário Batista do Sul</p>
+                <p><strong>Anos de Ministério:</strong> 15 anos</p>
+                <p><strong>Família:</strong> Casado com Maria da Silva, pai de dois filhos</p>
+                <p>O Pastor João tem um coração apaixonado por ver vidas transformadas pelo poder do Evangelho. Sua pregação é marcada por profundidade bíblica e aplicação prática para o dia a dia.</p>
+                <p>Além do pastoreio da Igreja Batista Reconnect, ele é envolvido em treinamento de líderes e projetos missionários em comunidades carentes.</p>
+            </div>
+        </div>
+
+        <div class="sermons-container">
+            <h2>ÚLTIMAS MENSAGENS</h2>
+            <div class="sermon-list">
+                <div class="sermon-card">
+                    <h3>Vivendo em Conexão</h3>
+                    <div class="date">15 de Outubro, 2023</div>
+                    <div class="description">Mensagem sobre a importância da comunhão na vida cristã.</div>
+                    <a href="#" class="watch-btn"><i class="fas fa-play"></i> Assistir</a>
+                </div>
+                <div class="sermon-card">
+                    <h3>Fé em Tempos Difíceis</h3>
+                    <div class="date">8 de Outubro, 2023</div>
+                    <div class="description">Como manter a fé em meio às adversidades da vida.</div>
+                    <a href="#" class="watch-btn"><i class="fas fa-play"></i> Assistir</a>
+                </div>
+                <div class="sermon-card">
+                    <h3>O Poder da Oração</h3>
+                    <div class="date">1 de Outubro, 2023</div>
+                    <div class="description">Explorando a vida de oração que transforma realidades.</div>
+                    <a href="#" class="watch-btn"><i class="fas fa-play"></i> Assistir</a>
+                </div>
+            </div>
+        </div>
+
+        <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar ao Site Principal</a>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

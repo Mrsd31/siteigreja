@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Reconnect</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .admin-dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+            background-color: var(--primary-color);
+        }
+        
+        .admin-sidebar {
+            background-color: rgba(0, 0, 0, 0.9);
+            border-right: 1px solid var(--dark-accent);
+            padding: 20px 0;
+        }
+        
+        .admin-logo {
+            text-align: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--dark-accent);
+            margin-bottom: 20px;
+        }
+        
+        .admin-logo img {
+            max-height: 60px;
+        }
+        
+        .admin-nav ul {
+            list-style: none;
+        }
+        
+        .admin-nav li {
+            margin-bottom: 5px;
+        }
+        
+        .admin-nav a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+        
+        .admin-nav a:hover, .admin-nav a.active {
+            background-color: rgba(255, 204, 0, 0.1);
+            border-left-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+        
+        .admin-nav a i {
+            width: 25px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        
+        .admin-main {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--dark-accent);
+        }
+        
+        .admin-header h1 {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+        }
+        
+        .logout-btn {
+            padding: 8px 15px;
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .admin-section {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--dark-accent);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--dark-accent);
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--dark-accent);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--accent-color);
+        }
+        
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+        
+        .upload-area p {
+            margin-bottom: 10px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--dark-accent);
+            border-radius: 5px;
+            color: var(--text-color);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+        }
+        
+        .form-actions {
+            text-align: right;
+        }
+        
+        .save-btn {
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .save-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .gallery-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .gallery-preview img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid var(--dark-accent);
+        }
+        
+        .stream-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-sidebar {
+                display: none;
+            }
+            
+            .stream-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-dashboard">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <img src="imags/RECONNECT ICONEtransp.png" alt="Reconnect Logo">
+            </div>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="index.html" class="active"><i class="fas fa-tachometer-alt"></i> Painel</a></li>
+                    <li><a href="#"><i class="fas fa-images"></i> Galeria</a></li>
+                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                    <li><a href="#"><i class="fas fa-video"></i> Transmissões</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Membros</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>PAINEL ADMINISTRATIVO</h1>
+                <button class="logout-btn" onclick="window.location.href='login.html'"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            </header>
+            
+            <section class="admin-section">
+                <h2>ADICIONAR FOTOS À GALERIA</h2>
+                <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Arraste e solte suas fotos aqui ou clique para selecionar</p>
+                    <small>Formatos suportados: JPG, PNG (Máx. 5MB cada)</small>
+                    <input type="file" id="fileInput" class="file-input" multiple accept="image/jpeg,image/png">
+                </div>
+                
+                <div class="form-group">
+                    <label for="photoDepartment">Departamento:</label>
+                    <select id="photoDepartment">
+                        <option value="all">Todos</option>
+                        <option value="youth">Jovens</option>
+                        <option value="women">Mulheres</option>
+                        <option value="children">Crianças</option>
+                        <option value="pastor">Pastor</option>
+                        <option value="events">Eventos</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="photoDescription">Descrição (opcional):</label>
+                    <input type="text" id="photoDescription" placeholder="Ex: Retiro Espiritual 2023">
+                </div>
+                
+                <div class="form-actions">
+                    <button class="save-btn"><i class="fas fa-save"></i> Salvar Fotos</button>
+                </div>
+                
+                <h3>PRÉ-VISUALIZAÇÃO</h3>
+                <div class="gallery-preview" id="galleryPreview">
+                    <!-- Fotos serão exibidas aqui após seleção -->
+                </div>
+            </section>
+            
+            <section class="admin-section">
+                <h2>TRANSMISSÃO AO VIVO</h2>
+                <div class="stream-controls">
+                    <div>
+                        <h3>INICIAR TRANSMISSÃO</h3>
+                        <div class="form-group">
+                            <label for="streamTitle">Título da Transmissão:</label>
+                            <input type="text" id="streamTitle" placeholder="Ex: Culto de Domingo">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="streamDescription">Descrição:</label>
+                            <textarea id="streamDescription" placeholder="Descreva o conteúdo da transmissão"></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="save-btn"><i class="fas fa-broadcast-tower"></i> Iniciar Transmissão</button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3>VINCULAR YOUTUBE</h3>
+                        <div class="form-group">
+                            <label for="youtubeUrl">URL do YouTube:</label>
+                            <input type="text" id="youtubeUrl" placeholder="https://youtube.com/...">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="save-btn"><i class="fab fa-youtube"></i> Vincular YouTube</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="admin-section">
+                <h2>ÚLTIMAS FOTOS ADICIONADAS</h2>
+                <div class="gallery-preview">
+                    <img src="../assets/images/gallery/photo1.jpg" alt="Foto 1">
+                    <img src="../assets/images/gallery/photo2.jpg" alt="Foto 2">
+                    <img src="../assets/images/gallery/photo3.jpg" alt="Foto 3">
+                    <img src="../assets/images/gallery/photo4.jpg" alt="Foto 4">
+                    <img src="../assets/images/gallery/photo5.jpg" alt="Foto 5">
+                    <img src="../assets/images/gallery/photo6.jpg" alt="Foto 6">
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Simular upload de fotos
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const preview = document.getElementById('galleryPreview');
+            preview.innerHTML = '';
+            
+            if (this.files) {
+                Array.from(this.files).forEach(file => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        preview.appendChild(img);
+                    }
+                    
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+        
+        // Simular início de transmissão
+        document.querySelector('.stream-controls .save-btn').addEventListener('click', function() {
+            const title = document.getElementById('streamTitle').value;
+            if (title) {
+                alert(`Transmissão "${title}" iniciada com sucesso!`);
+            } else {
+                alert('Por favor, insira um título para a transmissão');
+            }
+        });
+        
+        // Simular vinculação com YouTube
+        document.querySelectorAll('.stream-controls .save-btn')[1].addEventListener('click', function() {
+            const url = document.getElementById('youtubeUrl').value;
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                alert('YouTube vinculado com sucesso!');
+            } else {
+                alert('Por favor, insira uma URL válida do YouTube');
+            }
+        });
+    </script>
+</body>
+</html>

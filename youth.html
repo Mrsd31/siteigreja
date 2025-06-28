@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministério de Jovens - Reconnect</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .department-header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-bottom: 3px solid var(--accent-color);
+            margin-bottom: 30px;
+        }
+        
+        .department-header h1 {
+            color: var(--accent-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .department-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .department-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .department-about, .department-activities {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--dark-accent);
+        }
+        
+        .department-about h2, .department-activities h2 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: left;
+        }
+        
+        .department-about p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .department-activities ul {
+            list-style-position: inside;
+            line-height: 1.8;
+        }
+        
+        .department-activities li {
+            margin-bottom: 10px;
+        }
+        
+        .department-gallery {
+            margin-top: 30px;
+        }
+        
+        .department-gallery h2 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: left;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .gallery-grid img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+       <!-- Slideshow de fundo -->
+    <div class="slideshow">
+        <div class="slide active" style="background-image: url('imags/logo2.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo1.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo2.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo4.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo5.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo7.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo8.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo9.jpg')"></div>
+        <div class="slide" style="background-image: url('imags/logo10.jpg')"></div>
+        <div class="overlay"></div>
+    </div>
+
+    <div class="logo-top">
+        <img src="../assets/images/logo.png" alt="Reconnect Logo">
+    </div>
+
+    <div class="department-header">
+        <h1>MINISTÉRIO DE JOVENS</h1>
+        <p>Conectando a nova geração a Cristo</p>
+    </div>
+
+    <div class="department-content">
+        <div class="department-about">
+            <h2>SOBRE NÓS</h2>
+            <p>O Ministério de Jovens da Igreja Batista Reconnect é um espaço dedicado aos jovens entre 15 e 30 anos que buscam crescer em sua fé e relacionamento com Deus.</p>
+            <p>Nosso objetivo é proporcionar um ambiente acolhedor onde os jovens possam se conectar com Cristo e uns com os outros, através de estudos bíblicos relevantes, adoração e comunhão.</p>
+            <p>Creemos que os jovens são agentes transformadores na sociedade e queremos equipá-los para viverem plenamente seu propósito em Cristo.</p>
+        </div>
+
+        <div class="department-activities">
+            <h2>ATIVIDADES</h2>
+            <ul>
+                <li>Culto Jovem - Sextas às 20h</li>
+                <li>Grupos Pequenos - Domingos às 17h</li>
+                <li>Estudo Bíblico - Quartas às 19h30</li>
+                <li>Retiro Anual - Transforme</li>
+                <li>Projeto Missionário Jovem</li>
+                <li>Eventos Sociais Mensais</li>
+            </ul>
+        </div>
+
+        <div class="department-gallery">
+            <h2>GALERIA</h2>
+            <div class="gallery-grid">
+                <img src="../assets/images/youth/youth1.jpg" alt="Evento Jovem">
+                <img src="../assets/images/youth/youth2.jpg" alt="Retiro Jovem">
+                <img src="../assets/images/youth/youth3.jpg" alt="Culto Jovem">
+                <img src="../assets/images/youth/youth4.jpg" alt="Atividades">
+                <img src="../assets/images/youth/youth5.jpg" alt="Louvor">
+                <img src="../assets/images/youth/youth6.jpg" alt="Comunhão">
+            </div>
+        </div>
+
+        <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Voltar ao Site Principal</a>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

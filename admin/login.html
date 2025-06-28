@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Igreja Reconnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #ffcc00;
+            --dark-gray: #1a1a1a;
+            --light-gray: #333333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--primary);
+            color: var(--secondary);
+            min-height: 100vh;
+        }
+
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .admin-header h1 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .upload-section {
+            background-color: var(--dark-gray);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--light-gray);
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent);
+        }
+
+        .upload-area i {
+            font-size: 48px;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        select, button {
+            padding: 12px;
+            background-color: var(--light-gray);
+            color: var(--secondary);
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: var(--primary);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .preview img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .status {
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .success {
+            background-color: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            display: block;
+        }
+
+        .error {
+            background-color: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
+            display: block;
+        }
+
+        .gallery-section {
+            background-color: var(--dark-gray);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 10px 15px;
+            background-color: var(--light-gray);
+            color: var(--secondary);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .tab-button.active {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 0, 0, 0.7);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-buttons {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1><i class="fas fa-lock"></i> PAINEL ADMINISTRATIVO</h1>
+            <p>Igreja Batista Reconnect</p>
+        </div>
+
+        <div class="upload-section">
+            <h2><i class="fas fa-upload"></i> Upload de Imagens</h2>
+            
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Arraste e solte imagens aqui ou clique para selecionar</p>
+                <small>Formatos suportados: JPG, PNG (Máx. 5MB cada)</small>
+                <input type="file" id="fileInput" class="file-input" multiple accept="image/jpeg,image/png">
+            </div>
+            
+            <div class="controls">
+                <select id="departmentSelect">
+                    <option value="geral">Geral</option>
+                    <option value="jovens">Jovens</option>
+                    <option value="mulheres">Mulheres</option>
+                    <option value="criancas">Crianças</option>
+                    <option value="pastor">Pastor</option>
+                    <option value="eventos">Eventos</option>
+                </select>
+                
+                <button id="uploadButton"><i class="fas fa-paper-plane"></i> Enviar Imagens</button>
+            </div>
+            
+            <div class="preview" id="imagePreview"></div>
+            
+            <div class="status" id="statusMessage"></div>
+        </div>
+
+        <div class="gallery-section">
+            <h2><i class="fas fa-images"></i> Gerenciar Galeria</h2>
+            
+            <div class="tab-buttons">
+                <button class="tab-button active" data-department="geral">Geral</button>
+                <button class="tab-button" data-department="jovens">Jovens</button>
+                <button class="tab-button" data-department="mulheres">Mulheres</button>
+                <button class="tab-button" data-department="criancas">Crianças</button>
+                <button class="tab-button" data-department="pastor">Pastor</button>
+                <button class="tab-button" data-department="eventos">Eventos</button>
+            </div>
+            
+            <div class="gallery-grid" id="galleryContainer">
+                <!-- As imagens serão carregadas aqui -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de Galeria
+        class ChurchGallery {
+            constructor() {
+                this.storageKey = 'churchGalleryData';
+                this.initStorage();
+                this.setupEventListeners();
+                this.loadGallery();
+            }
+
+            initStorage() {
+                if (!localStorage.getItem(this.storageKey)) {
+                    localStorage.setItem(this.storageKey, JSON.stringify({
+                        geral: [],
+                        jovens: [],
+                        mulheres: [],
+                        criancas: [],
+                        pastor: [],
+                        eventos: []
+                    }));
+                }
+            }
+
+            getGalleryData() {
+                return JSON.parse(localStorage.getItem(this.storageKey));
+            }
+
+            saveImage(department, imageData) {
+                const gallery = this.getGalleryData();
+                const imageId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+                
+                gallery[department].unshift({
+                    id: imageId,
+                    data: imageData,
+                    timestamp: Date.now()
+                });
+
+                localStorage.setItem(this.storageKey, JSON.stringify(gallery));
+                return imageId;
+            }
+
+            deleteImage(imageId) {
+                const gallery = this.getGalleryData();
+                let deleted = false;
+
+                for (const department in gallery) {
+                    const initialLength = gallery[department].length;
+                    gallery[department] = gallery[department].filter(img => img.id !== imageId);
+                    if (gallery[department].length !== initialLength) deleted = true;
+                }
+
+                if (deleted) {
+                    localStorage.setItem(this.storageKey, JSON.stringify(gallery));
+                }
+                return deleted;
+            }
+
+            setupEventListeners() {
+                // Upload Area
+                const uploadArea = document.getElementById('uploadArea');
+                const fileInput = document.getElementById('fileInput');
+                
+                uploadArea.addEventListener('click', () => fileInput.click());
+                
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.style.borderColor = 'var(--accent)';
+                });
+                
+                uploadArea.addEventListener('dragleave', () => {
+                    uploadArea.style.borderColor = 'var(--light-gray)';
+                });
+                
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.style.borderColor = 'var(--light-gray)';
+                    this.handleFiles(e.dataTransfer.files);
+                });
+
+                fileInput.addEventListener('change', () => this.handleFiles(fileInput.files));
+                
+                // Upload Button
+                document.getElementById('uploadButton').addEventListener('click', () => this.uploadImages());
+                
+                // Tab Buttons
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.loadGallery(btn.dataset.department);
+                    });
+                });
+            }
+
+            handleFiles(files) {
+                const preview = document.getElementById('imagePreview');
+                preview.innerHTML = '';
+                
+                if (files.length === 0) return;
+
+                Array.from(files).forEach(file => {
+                    if (!file.type.match('image.*')) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        preview.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            uploadImages() {
+                const fileInput = document.getElementById('fileInput');
+                const department = document.getElementById('departmentSelect').value;
+                
+                if (fileInput.files.length === 0) {
+                    this.showStatus('Nenhuma imagem selecionada', 'error');
+                    return;
+                }
+
+                let uploaded = 0;
+                const totalFiles = fileInput.files.length;
+                
+                Array.from(fileInput.files).forEach(file => {
+                    if (!file.type.match('image.*')) {
+                        this.showStatus(`Arquivo ${file.name} não é uma imagem`, 'error');
+                        return;
+                    }
+                    
+                    if (file.size > 5 * 1024 * 1024) {
+                        this.showStatus(`Imagem ${file.name} muito grande (máx. 5MB)`, 'error');
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.saveImage(department, e.target.result);
+                        uploaded++;
+                        
+                        if (uploaded === totalFiles) {
+                            this.showStatus(`${uploaded} imagens salvas em ${department}`, 'success');
+                            fileInput.value = '';
+                            document.getElementById('imagePreview').innerHTML = '';
+                            this.loadGallery(department);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            loadGallery(department = 'geral') {
+                const galleryContainer = document.getElementById('galleryContainer');
+                const gallery = this.getGalleryData()[department] || [];
+                
+                galleryContainer.innerHTML = '';
+                
+                if (gallery.length === 0) {
+                    galleryContainer.innerHTML = '<p>Nenhuma imagem nesta seção</p>';
+                    return;
+                }
+
+                gallery.forEach(img => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.innerHTML = `
+                        <img src="${img.data}" alt="Foto da galeria">
+                        <button class="delete-btn" data-id="${img.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+                    galleryContainer.appendChild(item);
+                });
+
+                // Adicionar eventos de deletar
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const imageId = e.currentTarget.getAttribute('data-id');
+                        if (this.deleteImage(imageId)) {
+                            this.showStatus('Imagem removida com sucesso', 'success');
+                            this.loadGallery(department);
+                        }
+                    });
+                });
+            }
+
+            showStatus(message, type) {
+                const status = document.getElementById('statusMessage');
+                status.textContent = message;
+                status.className = 'status ' + type;
+                setTimeout(() => {
+                    status.style.opacity = '0';
+                    setTimeout(() => {
+                        status.className = 'status';
+                        status.style.opacity = '1';
+                    }, 500);
+                }, 3000);
+            }
+        }
+
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            window.churchGallery = new ChurchGallery();
+        });
+    </script>
+</body>
+</html>

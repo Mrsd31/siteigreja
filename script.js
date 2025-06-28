@@ -1,275 +1,476 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Dados dos eventos (aumentados)
-    const events = [
-        {
-            title: "Culto de Celebração",
-            date: "15/10/2023",
-            time: "19:30",
-            description: "Venha participar do nosso culto semanal de celebração e adoração com a presença especial do Coral Infantil.",
-            location: "Sede Principal",
-            image: "https://source.unsplash.com/random/600x400/?worship"
-        },
-        {
-            title: "Estudo Bíblico Profundo",
-            date: "18/10/2023",
-            time: "20:00",
-            description: "Estudo aprofundado do livro de Efésios com nosso pastor. Traga sua Bíblia e venha se alimentar da Palavra.",
-            location: "Salão de Eventos",
-            image: "https://source.unsplash.com/random/600x400/?bible"
-        },
-        {
-            title: "Retiro Espiritual",
-            date: "21-22/10/2023",
-            time: "08:00",
-            description: "Retiro de fim de semana para renovação espiritual com momentos de oração, louvor e comunhão. Inscrições abertas!",
-            location: "Acampamento Monte Sinai",
-            image: "https://source.unsplash.com/random/600x400/?retreat"
-        },
-        {
-            title: "Ação Social - Amor ao Próximo",
-            date: "25/10/2023",
-            time: "14:00",
-            description: "Distribuição de cestas básicas e agasalhos para famílias carentes da comunidade. Participe desta obra de amor!",
-            location: "Comunidade Local",
-            image: "https://source.unsplash.com/random/600x400/?charity"
-        },
-        {
-            title: "Encontro de Jovens",
-            date: "28/10/2023",
-            time: "16:00",
-            description: "Evento especial para jovens com música, palavra e muita integração. Traga seus amigos!",
-            location: "Sede Principal",
-            image: "https://source.unsplash.com/random/600x400/?youth"
-        },
-        {
-            title: "Batismos",
-            date: "29/10/2023",
-            time: "10:00",
-            description: "Cerimônia de batismos. Venha celebrar essa importante decisão de fé com nossos irmãos.",
-            location: "Piscina Batismal",
-            image: "https://source.unsplash.com/random/600x400/?baptism"
-        }
-    ];
-
-   // Dados da galeria (aumentados)
-const galleryPhotos = [
-    "igreja001.png",
-    "igreja002.png",
-    "igreja003.png",
-    "igreja004.png",
-    "igreja005.png",
-    "igreja006.png",
-    "igreja007.png",
-    "igreja008.png",
-    "igreja009.png",
-    "igreja010.png",
-    "igreja011.png",
-    "igreja012.png",
-    "igreja013.png",
-    "igreja014.png",
-    "igreja015.png"
-];
-
-    // Carrega os eventos
-    const eventsContainer = document.getElementById('events-container');
+    // Slideshow de fundo
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
     
-    events.forEach(event => {
-        const eventCard = document.createElement('div');
-        eventCard.className = 'event-card';
-        
-        eventCard.innerHTML = `
-            <div class="event-image" style="background-image: url('${event.image}')"></div>
-            <div class="event-content">
-                <div class="event-date">${event.date} • ${event.time}</div>
-                <h3 class="event-title">${event.title}</h3>
-                <p class="event-description">${event.description}</p>
-                <p class="event-location"><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
-            </div>
-        `;
-        
-        eventsContainer.appendChild(eventCard);
-    });
-
-    // Carrega a galeria
-    const galleryGrid = document.querySelector('.gallery-grid');
-    
-    galleryPhotos.forEach(photo => {
-        const galleryItem = document.createElement('div');
-        galleryItem.className = 'gallery-item';
-        galleryItem.style.backgroundImage = `url('${photo}')`;
-        galleryGrid.appendChild(galleryItem);
-    });
-
-    // Slider de fotos automático
-    function initPhotoSlider() {
-        const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
-        
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-        
-        // Muda a foto a cada 5 segundos
-        setInterval(nextSlide, 5000);
+    function showSlide(n) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
     }
     
-    initPhotoSlider();
-
-    // Audio Player
-    const audio = document.getElementById('churchAudio');
-    const playBtn = document.getElementById('playBtn');
-    const volumeControl = document.getElementById('volumeControl');
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
     
-    // Configura volume inicial
-    audio.volume = volumeControl.value;
+    // Mudar slide a cada 4 segundos
+    setInterval(nextSlide, 4000);
+    
+    // Player de música
+    const audioPlayer = document.getElementById('church-audio');
+    const playBtn = document.getElementById('play-btn');
+    const pauseBtn = document.getElementById('pause-btn');
+    const volumeControl = document.getElementById('volume-control');
     
     playBtn.addEventListener('click', function() {
-        if (audio.paused) {
-            audio.play();
-            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-        } else {
-            audio.pause();
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-        }
+        audioPlayer.play();
+        playBtn.style.display = 'none';
+        pauseBtn.style.display = 'flex';
     });
     
-    // Controle de volume
+    pauseBtn.addEventListener('click', function() {
+        audioPlayer.pause();
+        pauseBtn.style.display = 'none';
+        playBtn.style.display = 'flex';
+    });
+    
     volumeControl.addEventListener('input', function() {
-        audio.volume = this.value;
-        
-        // Atualiza ícone do volume
-        const volumeIcon = document.querySelector('.volume-icon i');
-        if (this.value == 0) {
-            volumeIcon.className = 'fas fa-volume-mute';
-        } else if (this.value < 0.5) {
-            volumeIcon.className = 'fas fa-volume-down';
-        } else {
-            volumeIcon.className = 'fas fa-volume-up';
-        }
+        audioPlayer.volume = this.value;
     });
-
-    // Formulário de contato
-    const contactForm = document.getElementById('contactForm');
     
-    contactForm.addEventListener('submit', function(e) {
+    // Esconder pause button inicialmente
+    pauseBtn.style.display = 'none';
+    
+    // Formulário de inscrição
+    const registrationForm = document.getElementById('event-registration');
+    const sendWhatsappBtn = document.getElementById('send-whatsapp');
+    const downloadPdfBtn = document.getElementById('download-pdf');
+    const downloadExcelBtn = document.getElementById('download-excel');
+    
+    registrationForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
-        
-        // Simulação de envio
-        console.log('Formulário enviado:', { name, email, message });
-        
-        // Feedback visual
-        const submitBtn = contactForm.querySelector('.submit-btn');
-        submitBtn.innerHTML = '<i class="fas fa-check"></i> Mensagem Enviada';
-        submitBtn.style.backgroundColor = '#2ecc71';
-        
-        setTimeout(() => {
-            submitBtn.innerHTML = 'Enviar Mensagem';
-            submitBtn.style.backgroundColor = '';
-            contactForm.reset();
-        }, 3000);
+        alert('Inscrição enviada com sucesso!');
+        this.reset();
     });
-
-    // Efeito de rolagem suave
-    document.querySelectorAll('nav a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
+    
+    sendWhatsappBtn.addEventListener('click', function() {
+        const phoneNumber = 'SEUNUMERO'; // Substitua pelo número da igreja
+        const message = 'Olá, gostaria de me inscrever para o evento da Igreja Batista Reconnect.';
+        window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    });
+    
+    downloadPdfBtn.addEventListener('click', function() {
+        // Criar PDF fictício para demonstração
+        const pdfContent = `
+            Nome: ${registrationForm[0].value}
+            Email: ${registrationForm[1].value}
+            Telefone: ${registrationForm[2].value}
+            Evento: ${registrationForm[3].value}
+        `;
+        
+        const blob = new Blob([pdfContent], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Inscricao_Reconnect.pdf';
+        a.click();
+        URL.revokeObjectURL(url);
+    });
+    
+    downloadExcelBtn.addEventListener('click', function() {
+        // Criar Excel fictício para demonstração
+        const excelContent = `
+            Nome,Email,Telefone,Evento
+            ${registrationForm[0].value},${registrationForm[1].value},${registrationForm[2].value},${registrationForm[3].value}
+        `;
+        
+        const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Inscricao_Reconnect.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+    });
+    
+    // Carregar galeria de fotos
+    const photoGrid = document.getElementById('photo-grid');
+    
+    // Fotos de exemplo - na prática, viriam do backend
+    const samplePhotos = [
+        'assets/images/gallery/photo1.jpg',
+        'assets/images/gallery/photo2.jpg',
+        'assets/images/gallery/photo3.jpg',
+        'assets/images/gallery/photo4.jpg',
+        'assets/images/gallery/photo5.jpg',
+        'assets/images/gallery/photo6.jpg',
+        'assets/images/gallery/photo7.jpg',
+        'assets/images/gallery/photo8.jpg'
+    ];
+    
+    samplePhotos.forEach(photo => {
+        const img = document.createElement('img');
+        img.src = photo;
+        img.alt = 'Evento da Igreja';
+        img.addEventListener('click', function() {
+            // Ampliar foto ao clicar
+            const viewer = document.createElement('div');
+            viewer.style.position = 'fixed';
+            viewer.style.top = '0';
+            viewer.style.left = '0';
+            viewer.style.width = '100%';
+            viewer.style.height = '100%';
+            viewer.style.backgroundColor = 'rgba(0,0,0,0.9)';
+            viewer.style.display = 'flex';
+            viewer.style.justifyContent = 'center';
+            viewer.style.alignItems = 'center';
+            viewer.style.zIndex = '1000';
+            viewer.style.cursor = 'pointer';
             
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
+            const fullImg = document.createElement('img');
+            fullImg.src = this.src;
+            fullImg.style.maxWidth = '90%';
+            fullImg.style.maxHeight = '90%';
+            fullImg.style.objectFit = 'contain';
             
-            window.scrollTo({
-                top: targetElement.offsetTop - 80,
-                behavior: 'smooth'
+            viewer.appendChild(fullImg);
+            viewer.addEventListener('click', function() {
+                document.body.removeChild(viewer);
             });
+            
+            document.body.appendChild(viewer);
+        });
+        
+        photoGrid.appendChild(img);
+    });
+    
+    // Controles de transmissão ao vivo
+    const startStreamBtn = document.getElementById('start-stream-btn');
+    const youtubeStreamBtn = document.getElementById('youtube-stream');
+    const websiteStreamBtn = document.getElementById('website-stream');
+    const liveContainer = document.getElementById('live-container');
+    
+    startStreamBtn.addEventListener('click', function() {
+        // Na prática, isso acionaria a API de transmissão
+        alert('Funcionalidade de transmissão ao vivo será implementada no backend');
+    });
+    
+    youtubeStreamBtn.addEventListener('click', function() {
+        liveContainer.innerHTML = `
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/live_stream?channel=SEUCANAL" 
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen></iframe>
+        `;
+    });
+    
+    websiteStreamBtn.addEventListener('click', function() {
+        // Simulação de transmissão pelo site
+        liveContainer.innerHTML = `
+            <video width="100%" height="400" controls autoplay>
+                <source src="assets/videos/live.mp4" type="video/mp4">
+                Seu navegador não suporta vídeos HTML5.
+            </video>
+            <p class="stream-notice">Transmissão pelo site da igreja</p>
+        `;
+    });
+    
+    // Efeitos de hover nos botões
+    const buttons = document.querySelectorAll('button, .departments-nav a, .admin-link');
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px)';
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
         });
     });
+});
 
-    // Efeito parallax simples
-    window.addEventListener('scroll', function() {
-        const scrollPosition = window.pageYOffset;
-        const parallaxSection = document.querySelector('.parallax-section');
-        
-        if (parallaxSection) {
-            parallaxSection.style.backgroundPositionY = scrollPosition * 0.5 + 'px';
+// church-gallery.js - Único arquivo necessário
+
+/**********************
+ * CONFIGURAÇÕES GERAIS
+ **********************/
+const GALLERY_CONFIG = {
+    storageKey: 'churchGalleryData',
+    departments: ['geral', 'jovens', 'mulheres', 'criancas', 'pastor', 'eventos'],
+    maxFileSize: 5 * 1024 * 1024, // 5MB
+    allowedTypes: ['image/jpeg', 'image/png']
+};
+
+/**********************
+ * CORE DA GALERIA
+ **********************/
+class ChurchGallery {
+    constructor() {
+        this.initStorage();
+        this.setupEventListeners();
+        this.loadContent();
+    }
+
+    initStorage() {
+        if (!localStorage.getItem(GALLERY_CONFIG.storageKey)) {
+            const initialData = {};
+            GALLERY_CONFIG.departments.forEach(dept => {
+                initialData[dept] = [];
+            });
+            localStorage.setItem(GALLERY_CONFIG.storageKey, JSON.stringify(initialData));
         }
-    });
-});
-
-// Sistema de Upload de Fotos
-const correctPassword = "senha123"; // Altere para a senha que desejar
-const galleryGrid = document.querySelector('.gallery-grid');
-const loginModal = document.getElementById('loginModal');
-const uploadModal = document.getElementById('uploadModal');
-const uploadBtn = document.getElementById('uploadBtn');
-const closeModals = document.querySelectorAll('.close-modal');
-
-// Mostrar modal de login
-uploadBtn.addEventListener('click', function() {
-    if (!localStorage.getItem('loggedIn')) {
-        loginModal.style.display = 'block';
-    } else {
-        uploadModal.style.display = 'block';
     }
-});
 
-// Fechar modais
-closeModals.forEach(btn => {
-    btn.addEventListener('click', function() {
-        loginModal.style.display = 'none';
-        uploadModal.style.display = 'none';
-    });
-});
-
-// Login
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const password = document.getElementById('password').value;
-    
-    if (password === correctPassword) {
-        localStorage.setItem('loggedIn', 'true');
-        loginModal.style.display = 'none';
-        uploadModal.style.display = 'block';
-    } else {
-        alert('Senha incorreta!');
+    getGalleryData() {
+        return JSON.parse(localStorage.getItem(GALLERY_CONFIG.storageKey));
     }
-});
 
-// Simulação de upload (em um sistema real, você precisaria de backend)
-document.getElementById('uploadForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const files = document.getElementById('photoUpload').files;
-    
-    if (files.length > 0) {
-        for (let i = 0; i < files.length; i++) {
+    saveImage(department, imageData) {
+        const gallery = this.getGalleryData();
+        const imageId = 'img_' + Date.now() + Math.random().toString(36).substr(2, 5);
+        
+        gallery[department].unshift({
+            id: imageId,
+            data: imageData,
+            timestamp: Date.now()
+        });
+
+        localStorage.setItem(GALLERY_CONFIG.storageKey, JSON.stringify(gallery));
+        return imageId;
+    }
+
+    deleteImage(imageId) {
+        const gallery = this.getGalleryData();
+        let deleted = false;
+
+        for (const department in gallery) {
+            const initialLength = gallery[department].length;
+            gallery[department] = gallery[department].filter(img => img.id !== imageId);
+            if (gallery[department].length !== initialLength) deleted = true;
+        }
+
+        if (deleted) {
+            localStorage.setItem(GALLERY_CONFIG.storageKey, JSON.stringify(gallery));
+        }
+        return deleted;
+    }
+
+    getImagesByDepartment(department) {
+        return this.getGalleryData()[department] || [];
+    }
+
+    /**********************
+     * INTERFACE DO USUÁRIO
+     **********************/
+    setupEventListeners() {
+        // Upload de imagens (admin)
+        if (document.getElementById('uploadArea')) {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput') || document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.multiple = true;
+            fileInput.accept = 'image/jpeg,image/png';
+            fileInput.style.display = 'none';
+            
+            uploadArea.addEventListener('click', () => fileInput.click());
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#ffcc00';
+            });
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = '#333333';
+            });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#333333';
+                this.handleFiles(e.dataTransfer.files);
+            });
+
+            fileInput.addEventListener('change', () => this.handleFiles(fileInput.files));
+            document.body.appendChild(fileInput);
+
+            if (document.getElementById('uploadButton')) {
+                document.getElementById('uploadButton').addEventListener('click', () => {
+                    this.uploadImages();
+                });
+            }
+        }
+
+        // Tabs de departamentos
+        document.querySelectorAll('.gallery-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const department = tab.dataset.department;
+                this.showGallery(department);
+            });
+        });
+
+        // Botões de deletar
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.delete-btn')) {
+                const imageId = e.target.closest('.delete-btn').dataset.id;
+                if (this.deleteImage(imageId)) {
+                    this.showMessage('Imagem removida com sucesso!', 'success');
+                    this.loadContent();
+                }
+            }
+        });
+    }
+
+    handleFiles(files) {
+        const preview = document.getElementById('imagePreview') || document.createElement('div');
+        preview.innerHTML = '';
+        
+        if (files.length === 0) return;
+
+        Array.from(files).forEach(file => {
+            if (!GALLERY_CONFIG.allowedTypes.includes(file.type)) return;
+            if (file.size > GALLERY_CONFIG.maxFileSize) return;
+
             const reader = new FileReader();
-            
-            reader.onload = function(event) {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
-                galleryItem.style.backgroundImage = `url('${event.target.result}')`;
-                galleryGrid.prepend(galleryItem);
+            reader.onload = (e) => {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '150px';
+                img.style.maxHeight = '150px';
+                preview.appendChild(img);
             };
-            
-            reader.readAsDataURL(files[i]);
-        }
-        
-        alert(`${files.length} foto(s) adicionada(s) com sucesso!`);
-        uploadModal.style.display = 'none';
+            reader.readAsDataURL(file);
+        });
     }
-});
 
-// Redimensionar a seção de contatos
-document.addEventListener('DOMContentLoaded', function() {
-    const contactSection = document.getElementById('contact');
-    contactSection.style.padding = '20px'; // Reduz o padding
-    contactSection.style.margin = '30px 0'; // Reduz a margem
-    
-    const contactContainer = document.querySelector('.contact-container');
-    contactContainer.style.gap = '20px'; // Reduz o espaço entre as colunas
+    uploadImages() {
+        const fileInput = document.getElementById('fileInput');
+        const departmentSelect = document.getElementById('departmentSelect');
+        
+        if (!fileInput || !departmentSelect || fileInput.files.length === 0) {
+            this.showMessage('Nenhuma imagem selecionada', 'error');
+            return;
+        }
+
+        const department = departmentSelect.value;
+        const files = fileInput.files;
+        let uploaded = 0;
+
+        Array.from(files).forEach(file => {
+            if (!GALLERY_CONFIG.allowedTypes.includes(file.type)) {
+                this.showMessage(`Tipo não suportado: ${file.name}`, 'error');
+                return;
+            }
+
+            if (file.size > GALLERY_CONFIG.maxFileSize) {
+                this.showMessage(`Arquivo muito grande: ${file.name}`, 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.saveImage(department, e.target.result);
+                uploaded++;
+                
+                if (uploaded === files.length) {
+                    this.showMessage(`${uploaded} imagens salvas em ${department}`, 'success');
+                    fileInput.value = '';
+                    document.getElementById('imagePreview').innerHTML = '';
+                    this.loadContent();
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    /**********************
+     * EXIBIÇÃO DE CONTEÚDO
+     **********************/
+    loadContent() {
+        // Slideshow na página inicial
+        if (document.getElementById('main-slideshow')) {
+            this.initSlideshow('main-slideshow', 'geral');
+        }
+
+        // Galerias em todas as páginas
+        const currentDepartment = document.body.dataset.department || 'geral';
+        this.showGallery(currentDepartment);
+
+        // Admin gallery
+        if (document.getElementById('admin-gallery')) {
+            this.showGallery('geral', 'admin-gallery');
+        }
+    }
+
+    showGallery(department, containerId = 'gallery-container') {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const images = this.getImagesByDepartment(department);
+        container.innerHTML = '';
+
+        if (images.length === 0) {
+            container.innerHTML = '<p class="no-images">Nenhuma imagem disponível</p>';
+            return;
+        }
+
+        images.forEach(img => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `
+                <img src="${img.data}" alt="Foto da galeria">
+                ${containerId.includes('admin') ? 
+                    `<button class="delete-btn" data-id="${img.id}">
+                        <i class="fas fa-trash"></i>
+                    </button>` : ''
+                }
+            `;
+            container.appendChild(item);
+        });
+
+        // Ativar tab selecionada
+        document.querySelectorAll('.gallery-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.department === department);
+        });
+    }
+
+    initSlideshow(containerId, department) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const images = this.getImagesByDepartment(department);
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            if (images.length === 0) {
+                container.innerHTML = '<div class="slide-placeholder">Galeria vazia</div>';
+                return;
+            }
+
+            currentIndex = (index + images.length) % images.length;
+            container.innerHTML = `
+                <div class="slide" style="background-image: url('${images[currentIndex].data}')"></div>
+            `;
+        }
+
+        // Iniciar
+        showSlide(0);
+        
+        if (images.length > 1) {
+            setInterval(() => showSlide(currentIndex + 1), 5000);
+        }
+    }
+
+    showMessage(text, type = 'info') {
+        const existingMsg = document.querySelector('.gallery-message');
+        if (existingMsg) existingMsg.remove();
+
+        const msg = document.createElement('div');
+        msg.className = `gallery-message ${type}`;
+        msg.textContent = text;
+        document.body.appendChild(msg);
+
+        setTimeout(() => {
+            msg.style.opacity = '0';
+            setTimeout(() => msg.remove(), 500);
+        }, 3000);
+    }
+}
+
+// Inicializar quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', () => {
+    window.churchGallery = new ChurchGallery();
 });
